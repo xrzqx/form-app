@@ -1,0 +1,116 @@
+openapi: 3.0.0
+info:
+  title: Sample API
+  description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.
+  version: 0.1.9
+servers:
+  - url: http://127.0.0.1:8000
+    description: Main (production) server
+paths:
+  /job:
+    get:
+      summary: Returns a list of job.
+      description: this endpoints requested when open main(production) server for fill form option field
+      responses:
+        '200':    # status code
+          description: A JSON array of jobs names
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        names:
+                          type: string
+                          example: Frontend Web Programmer
+                        created_at:
+                          type: string
+                          example: "2023-07-05T12:44:42.000000Z"
+                          nullable: true
+                        updated_at:
+                          type: string
+                          example: "2023-07-05T12:44:42.000000Z"
+                          nullable: true
+                        deleted_at:
+                          type: string
+                          example: "null"
+                          nullable: true
+
+  /skill:
+    get:
+      summary: Returns a list of skill.
+      description: this endpoints requested when open main(production) server for fill form option field
+      responses:
+        '200':    # status code
+          description: A JSON array of skill names
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 2
+                        names:
+                          type: string
+                          example: PosgreSQL
+                        created_at:
+                          type: string
+                          example: "2023-07-05T12:44:42.000000Z"
+                          nullable: true
+                        updated_at:
+                          type: string
+                          example: "2023-07-05T12:44:42.000000Z"
+                          nullable: true
+                        deleted_at:
+                          type: string
+                          example: "null"
+                          nullable: true
+
+  /candidate:
+    post:
+      summary: Creates a new candidate.
+      description: this endpoints requested when form submission
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Jhonatan Akhbar"
+                job_id:
+                  type: integer
+                  example: 1
+                phone:
+                  type: integer
+                  example: 0893239851289
+                email:
+                  type: string
+                  example: energeek@gmail.com
+                year:
+                  type: integer
+                  example: 2000
+      responses: 
+        '201':
+          description: Created
