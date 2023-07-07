@@ -88,3 +88,9 @@ form .password i {
   background: #F64E60;
   transition: 0.2s ease;
 }
+.text-err{
+  display: flex;
+  align-items: center;
+  color: #F64E60;
+  font-size: 12px;
+}

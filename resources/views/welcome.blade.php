@@ -14,35 +14,90 @@
 </head>
 
 <body>
+    @if(Session::has('success'))
+    <script type="text/javascript">
+        function massge() {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Berhasil!',
+                html: 'Lamaran Berhasil dikirim.',
+                showConfirmButton: true,
+                timer: 2500
+            })
+        }
+        window.onload = massge;
+    </script>
+    @endif
     <div id="validation-errors"></div>
-    <form action="">
+    <form method="POST" action="{{route('candidate.store')}}">
+        @csrf
         <h2>Apply Lamaran</h2>
         <div class="form-group fullname">
             <label for="fullname">Nama Lengkap</label>
-            <input type="text" id="fullname" placeholder="Cth. Jhonathan Akbar">
+            <input type="text" id="fullname" placeholder="Cth. Jhonathan Akbar" name="name">
+            <div class="text-err">
+                @error('name')
+                <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false" width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+                </svg>
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
         </div>
         <div class="form-group jabatan">
             <label for="jabatan">Jabatan</label>
-            <select class="js-example-basic-single" name="jabatan" id="jabatan" data-placeholder="Pilih Jabatan">
+            <select class="js-example-basic-single" name="job" id="jabatan" data-placeholder="Pilih Jabatan">
                 <option value="" disabled selected hidden>Pilih Jabatan</option>
             </select>
+            <div class="text-err">
+                @error('job')
+                <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false" width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+                </svg>
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
         </div>
         <div class="form-group telepon">
             <label for="phone">Telepon</label>
-            <input type="text" id="phone" placeholder="Cth. 0893239851289">
+            <input type="text" name="phone" id="phone" placeholder="Cth. 0893239851289">
+            <div class="text-err">
+                @error('phone')
+                <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false" width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+                </svg>
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
         </div>
         <div class="form-group email">
             <label for="email">Email Address</label>
-            <input type="text" id="email" placeholder="Cth. energeekmail@gmail.com">
+            <input type="text" name="email" id="email" placeholder="Cth. energeekmail@gmail.com">
+            <div class="text-err">
+                @error('email')
+                <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false" width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+                </svg>
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
         </div>
         <div class="form-group date">
             <label for="year">Tahun Lahir</label>
-            <input type="number" id="year" placeholder="Pilih tahun" min="1980" max="2020">
+            <input type="number" name="year" id="year" placeholder="Pilih tahun" min="1980" max="2020">
+            <div class="text-err">
+                @error('year')
+                <svg aria-hidden="true" class="stUf5b LxE1Id" fill="currentColor" focusable="false" width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+                </svg>
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
         </div>
         <div class="form-group skill">
             <label for="skill">Skill Set</label>
             <select class="js-example-basic-multiple" name="skill" id="skill" multiple="multiple" data-placeholder="Pilih skill">
-
             </select>
         </div>
         <div class="form-group submit-btn" id="myBtn">
@@ -76,39 +131,6 @@
                     x.appendChild(t);
                     document.getElementById("skill").appendChild(x);
                 };
-            });
-
-            $('#myBtn').on('click', function(e) {
-                e.preventDefault();
-                console.log($('#jabatan').val());
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ route('candidate.store') }}",
-                    data: {
-                        name: $('#fullname').val(),
-                        phone: $('#phone').val(),
-                        email: $('#email').val(),
-                        year: $('#year').val(),
-                        job_id: $('#jabatan').val()
-                    },
-                    success: function(data) {
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: 'Berhasil!',
-                            html: 'Lamaran Berhasil dikirim.',
-                            showConfirmButton: true,
-                            timer: 2500
-                        })
-                    },
-                    error: function(xhr) {
-                        $('#validation-errors').html('');
-                        $.each(xhr.responseJSON.errors, function(key, value) {
-                            $('#validation-errors').append('<div class="alert alert-danger">' + value + '</div');
-                        });
-                    },
-                });
-
             });
         });
     </script>
